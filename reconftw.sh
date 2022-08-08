@@ -1565,6 +1565,7 @@ function subs_menu(){
 
 	subdomains_full
 	webprobe_full
+	remove_big_files
 	virtualhosts
 
 	if [ "$AXIOM" = true ]; then
