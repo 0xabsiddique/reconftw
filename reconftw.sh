@@ -1357,12 +1357,6 @@ comment1
 ########################################### MODES & MENUS #####################################################
 ###############################################################################################################
 
-function vulns(){
-	if [ "$VULNS_GENERAL" = true ]; then	
-	nuclei_check
-	cms_scanner
-	fi
-}
 
 function recon(){
 	
@@ -1373,11 +1367,11 @@ function recon(){
 
 	subdomains_full
 	webprobe_full
+	virtualhosts
 	remove_big_files
 	screenshot
-	virtualhosts
-	nuclei_check
 	fuzz
+	nuclei_check
 	urlchecks
 	jschecks
 
@@ -1575,21 +1569,47 @@ function subs_menu(){
 	end
 }
 
-function webs_menu(){
-	remove_big_files
+
+function dirfuzz(){
+        
+        if [ "$AXIOM" = true ]; then
+		axiom_lauch
+		axiom_selected
+	fi
+	
 	screenshot
-	virtualhosts
-	nuclei_check
-	cms_scanner
 	fuzz
+	
+	if [ "$AXIOM" = true ]; then
+		axiom_shutdown
+	fi
+}
+
+function url(){
+
+        remove_big_files
+        if [ "$AXIOM" = true ]; then
+		axiom_lauch
+		axiom_selected
+	fi
+	
 	urlchecks
 	jschecks
+
+	if [ "$AXIOM" = true ]; then
+		axiom_shutdown
+	fi
+	
 	url_gf
-	wordlist_gen
-	wordlist_gen_roboxtractor
-	password_dict
 	url_ext
-	vulns
+	end
+}
+
+
+function webs_menu(){
+	remove_big_files
+	nuclei_check
+	cms_scanner
 	end
 }
 
@@ -1604,13 +1624,13 @@ function help(){
 	printf "   -i in.txt         Include subdomains list\n"
 	printf " \n"
 	printf " ${bblue}MODE OPTIONS${reset}\n"
-	printf "   -r, --recon       Recon - Full recon process (only recon without attacks)\n"
-	printf "   -s, --subdomains  Subdomains + port scan + virtual host discovery\n"
-	printf "   -p, --passive     Passive - Performs only passive steps \n"
-	printf "   -a, --all         All - Perform all checks and exploitations\n"
-	printf "   -w, --web         Web - Just web checks from list provided\n"
-	printf "   -n, --osint       OSINT - Just checks public intel info\n"
-	printf "   -h                Help - Show this help\n"
+	printf "   -r, --recon       Recon - Full recon process (only recon without attacks) \n"
+	printf "   -s, --subdomains  Subdomains + port scan + virtual host discovery \n"
+	printf "   -u, --url         Endpoint collection active + passive steps \n"
+	printf "   -a, --all         All - Perform all checks and exploitations \n"
+	printf "   -w, --web         Web checks using nuclei + cms scanner \n"
+	printf "   -n, --dirfuzz     Dirfuzz + screenshot \n"
+	printf "   -h                Help - Show this help \n"
 	printf " \n"
 	printf " ${bblue}GENERAL OPTIONS${reset}\n"
 	printf "   --deep            Deep scan (Enable some slow options for deeper scan)\n"
@@ -1647,7 +1667,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 fi
 
-PROGARGS=$(getopt -o 'd:m:l:x:i:o:f:q:c:rspanwvh::' --long 'domain:,list:,recon,subdomains,passive,all,web,osint,deep,help,vps' -n 'reconFTW' -- "$@")
+PROGARGS=$(getopt -o 'd:m:l:x:i:o:f:q:c:rsuanwvh::' --long 'domain:,list:,recon,subdomains,url,all,dirfuzz,web,deep,help,vps' -n 'reconFTW' -- "$@")
 
 
 # Note the quotes around "$PROGARGS": they are essential!
@@ -1697,8 +1717,8 @@ while true; do
             shift
             continue
             ;;
-        '-p'|'--passive')
-            opt_mode='p'
+        '-u'|'--url')
+            opt_mode='u'
             shift
             continue
             ;;
@@ -1712,7 +1732,7 @@ while true; do
             shift
             continue
             ;;
-        '-n'|'--osint')
+        '-n'|'--dirfuzz')
             opt_mode='n'
             shift
             continue
