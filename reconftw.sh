@@ -1835,8 +1835,6 @@ startdir=${PWD}
 
 banner
 
-check_version
-
 startdir=${PWD}
 if [ -n "$list" ]; then
 	if [[ "$list" = ./* ]]; then
