@@ -1358,9 +1358,9 @@ comment1
 ###############################################################################################################
 
 function vulns(){
-	if [ "$VULNS_GENERAL" = true ]; then
-		
-		
+	if [ "$VULNS_GENERAL" = true ]; then	
+	nuclei_check
+	cms_scanner
 	fi
 }
 
@@ -1604,7 +1604,7 @@ function help(){
 	printf " \n"
 	printf " ${bblue}MODE OPTIONS${reset}\n"
 	printf "   -r, --recon       Recon - Full recon process (only recon without attacks)\n"
-	printf "   -s, --subdomains  Subdomains - Search subdomains, check tko and web probe\n"
+	printf "   -s, --subdomains  Subdomains + port scan + virtual host discovery\n"
 	printf "   -p, --passive     Passive - Performs only passive steps \n"
 	printf "   -a, --all         All - Perform all checks and exploitations\n"
 	printf "   -w, --web         Web - Just web checks from list provided\n"
