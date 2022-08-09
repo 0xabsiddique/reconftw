@@ -44,6 +44,7 @@ if [ ${BASH_VERSION} -lt 4 ]; then
 fi
 
 declare -A gotools
+gotools["aquatone"]="go install -v github.com/michenriksen/aquatone@latest"
 gotools["gf"]="go install -v github.com/tomnomnom/gf@latest"
 gotools["qsreplace"]="go install -v github.com/tomnomnom/qsreplace@latest"
 gotools["Amass"]="go install -v github.com/OWASP/Amass/v3/...@master"
