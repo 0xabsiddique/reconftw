@@ -1294,7 +1294,7 @@ function start(){
 			list="${dir}/target.txt"
 		fi
 	fi
-	mkdir -p .tmp .log osint subdomains webs hosts vulns
+	mkdir -p .tmp .log subdomains webs vulns
 
 	NOW=$(date +"%F")
 	NOWT=$(date +"%T")
@@ -1423,7 +1423,7 @@ function multi_recon(){
 		called_fn_dir=$dir/.called_fn
 		mkdir -p $dir
 		cd "$dir"  || { echo "Failed to cd directory '$dir' in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
-		mkdir -p .tmp .log .called_fn osint subdomains webs hosts vulns
+		mkdir -p .tmp .log .called_fn subdomains webs vulns
 
 		NOW=$(date +"%F")
 		NOWT=$(date +"%T")
