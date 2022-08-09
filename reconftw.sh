@@ -1588,7 +1588,7 @@ function dirfuzz(){
 }
 
 function url(){
-
+        start
         remove_big_files
         if [ "$AXIOM" = true ]; then
 		axiom_lauch
