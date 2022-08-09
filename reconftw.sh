@@ -1409,7 +1409,7 @@ function multi_recon(){
 	mkdir -p $workdir  || { echo "Failed to create directory '$workdir' in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
 	cd "$workdir"  || { echo "Failed to cd directory '$workdir' in ${FUNCNAME[0]} @ line ${LINENO}"; exit 1; }
 
-	mkdir -p .tmp .log .called_fn osint subdomains webs hosts vulns
+	mkdir -p .tmp .log .called_fn subdomains webs vulns
 	NOW=$(date +"%F")
 	NOWT=$(date +"%T")
 	LOGFILE="${workdir}/.log/${NOW}_${NOWT}.txt"
@@ -1943,12 +1943,12 @@ case $opt_mode in
 				sed -i 's/\r$//' $list
 				for domain in $(cat $list); do
 					start
-					osint
+					dirfuzz
 					end
 				done
 			else
 				start
-				osint
+				dirfuzz
 				end
 			fi
 			;;
