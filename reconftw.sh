@@ -1893,17 +1893,17 @@ case $opt_mode in
 				subs_menu
 			fi
             ;;
-        'p')
+        'u')
             if [ -n "$list" ]; then
 				if [ "$AXIOM" = true ]; then
-					mode="passive"
+					mode="url"
 				fi
 				sed -i 's/\r$//' $list
 				for domain in $(cat $list); do
-					passive
+					url
 				done
 			else
-				passive
+				url
 			fi
             ;;
         'a')
