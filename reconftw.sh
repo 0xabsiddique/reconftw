@@ -950,14 +950,14 @@ function jschecks(){
 				sed -i '/^\//!d' .tmp/js_endpoints.txt
 				cat .tmp/js_endpoints.txt | anew -q js/js_endpoints.txt
 			fi
-			printf "${yellow} Running : Gathering secrets 4/5${reset}\n"
-			if [ ! "$AXIOM" = true ]; then
-				[ -s "js/js_livelinks.txt" ] && cat js/js_livelinks.txt | nuclei -silent -t ~/nuclei-templates/ -tags exposure,token -r $resolvers_trusted -retries 3 -rl $NUCLEI_RATELIMIT -o js/js_secrets.txt 2>>"$LOGFILE" &>/dev/null
-			else
-				[ -s "js/js_livelinks.txt" ] && axiom-scan js/js_livelinks.txt -m nuclei -w /home/op/recon/nuclei/exposures/tokens/ -retries 3 -rl $NUCLEI_RATELIMIT -o js/js_secrets.txt $AXIOM_EXTRA_ARGS 2>>"$LOGFILE" &>/dev/null
-			fi
-			printf "${yellow} Running : Building wordlist 5/5${reset}\n"
-			[ -s "js/js_livelinks.txt" ] && interlace -tL js/js_livelinks.txt -threads ${INTERLACE_THREADS}  -c "python3 $tools/getjswords.py '_target_' | anew -q webs/dict_words.txt" &>/dev/null
+			# printf "${yellow} Running : Gathering secrets 4/5${reset}\n"
+			# if [ ! "$AXIOM" = true ]; then
+			#	[ -s "js/js_livelinks.txt" ] && cat js/js_livelinks.txt | nuclei -silent -t ~/nuclei-templates/ -tags exposure,token -r $resolvers_trusted -retries 3 -rl $NUCLEI_RATELIMIT -o js/js_secrets.txt 2>>"$LOGFILE" &>/dev/null
+			# else
+			#	[ -s "js/js_livelinks.txt" ] && axiom-scan js/js_livelinks.txt -m nuclei -w /home/op/recon/nuclei/exposures/tokens/ -retries 3 -rl $NUCLEI_RATELIMIT -o js/js_secrets.txt $AXIOM_EXTRA_ARGS 2>>"$LOGFILE" &>/dev/null
+			# fi
+			# printf "${yellow} Running : Building wordlist 5/5${reset}\n"
+			# [ -s "js/js_livelinks.txt" ] && interlace -tL js/js_livelinks.txt -threads ${INTERLACE_THREADS}  -c "python3 $tools/getjswords.py '_target_' | anew -q webs/dict_words.txt" &>/dev/null
 			end_func "Results are saved in $domain/js folder" ${FUNCNAME[0]}
 		else
 			end_func "No JS urls found for $domain, function skipped" ${FUNCNAME[0]}
@@ -1375,6 +1375,7 @@ function recon(){
 	fuzz
 	nuclei_check
 	urlchecks
+	url_gf
 	jschecks
 
 	if [ "$AXIOM" = true ]; then
@@ -1382,7 +1383,6 @@ function recon(){
 	fi
 
 	cms_scanner
-	url_gf
 	url_ext
 }
 
