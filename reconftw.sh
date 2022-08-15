@@ -1827,10 +1827,11 @@ if [ -n "$inScope_file" ]; then
     else
         SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
         dir="$SCRIPTPATH/Recon/$domain"
-    	mkdir -p $dir/Recon/$domain $dir/Recon/$domain/.tmp $dir/Recon/$domain/.log $dir/Recon/$domain/.called_fn $dir/Recon/$domain/subdomains $dir/Recon/$domain/webs $dir/Recon/$domain/vulns
-    	[ -s "${inScope_file}" ] && cat ${inScope_file} | anew -q $dir/Recon/$domain/subdomains/subdomains.txt
-	cat $dir/Recon/$domain/subdomains/subdomains.txt | httpx ${HTTPX_FLAGS} -no-color -json -H "${HEADER}" -threads $HTTPX_THREADS -rl $HTTPX_RATELIMIT -retries 2 -timeout $HTTPX_TIMEOUT -o .tmp/web_full_info_probe.txt 2>>"$LOGFILE" &>/dev/null
-	cat $dir/Recon/$domain/.tmp/web_full_info_probe.txt 2>/dev/null | anew -q $dir/Recon/$domain/.tmp/webs_all.txt
+	cd $dir
+    	mkdir -p $domain .tmp .log .called_fn subdomains webs vulns fuzzing
+    	[ -s "${inScope_file}" ] && cat ${inScope_file} | anew -q subdomains/subdomains.txt
+	cat subdomains/subdomains.txt | httpx ${HTTPX_FLAGS} -no-color -json -H "${HEADER}" -threads $HTTPX_THREADS -rl $HTTPX_RATELIMIT -retries 2 -timeout $HTTPX_TIMEOUT -o .tmp/web_full_info_probe.txt 2>>"$LOGFILE" &>/dev/null
+	cat .tmp/web_full_info_probe.txt 2>/dev/null | anew -q .tmp/webs_all.txt
 
 
     fi
