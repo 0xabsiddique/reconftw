@@ -1280,13 +1280,12 @@ function start(){
 		called_fn_dir="$dir"/.called_fn
 	fi
 	
-	<<comment2
-	if [ -z "$domain" ]; then
-		notification "\n\n${bred} No domain or list provided ${reset}\n\n" error
-		exit
-	fi 
-	comment2
-       
+	
+	#if [ -z "$domain" ]; then
+	#	notification "\n\n${bred} No domain or list provided ${reset}\n\n" error
+	#	exit
+	# fi 
+	
 	if [ ! -d "$called_fn_dir" ]; then
 		mkdir -p "$called_fn_dir"
 	fi
