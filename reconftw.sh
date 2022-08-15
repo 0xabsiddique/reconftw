@@ -1824,6 +1824,8 @@ if [ -n "$inScope_file" ]; then
     then
         printf "\n\n${bred} In Scope file is not a text file${reset}\n\n"
         exit
+    else
+    	[ -s "${inScope_file}" ] && cat ${inScope_file} | anew -q subdomains/subdomains.txt
     fi
 fi
 
