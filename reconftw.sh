@@ -1825,6 +1825,7 @@ if [ -n "$inScope_file" ]; then
         printf "\n\n${bred} In Scope file is not a text file${reset}\n\n"
         exit
     else
+    	mkdir -p $domain .tmp .log .called_fn subdomains webs vulns
     	[ -s "${inScope_file}" ] && cat ${inScope_file} | anew -q subdomains/subdomains.txt
     fi
 fi
