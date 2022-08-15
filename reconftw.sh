@@ -1827,7 +1827,10 @@ if [ -n "$inScope_file" ]; then
     else
     	mkdir -p $domain .tmp .log .called_fn subdomains webs vulns
     	[ -s "${inScope_file}" ] && cat ${inScope_file} | anew -q subdomains/subdomains.txt
-	webprobe_simple
+	cat subdomains/subdomains.txt | httpx ${HTTPX_FLAGS} -no-color -json -H "${HEADER}" -threads $HTTPX_THREADS -rl $HTTPX_RATELIMIT -retries 2 -timeout $HTTPX_TIMEOUT -o .tmp/web_full_info_probe.txt 2>>"$LOGFILE" &>/dev/null
+	cat .tmp/web_full_info_probe.txt 2>/dev/null | anew -q .tmp/webs_all.txt
+
+
     fi
 fi
 
