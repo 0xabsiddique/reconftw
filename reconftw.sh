@@ -1279,12 +1279,14 @@ function start(){
 		dir="$SCRIPTPATH/Recon/$domain"
 		called_fn_dir="$dir"/.called_fn
 	fi
-
+	
+	<<comment2
 	if [ -z "$domain" ]; then
 		notification "\n\n${bred} No domain or list provided ${reset}\n\n" error
 		exit
-	fi
-
+	fi 
+	comment2
+       
 	if [ ! -d "$called_fn_dir" ]; then
 		mkdir -p "$called_fn_dir"
 	fi
@@ -1824,13 +1826,6 @@ if [ -n "$inScope_file" ]; then
     then
         printf "\n\n${bred} In Scope file is not a text file${reset}\n\n"
         exit
-    else
-    	start
-    	[ -s "${inScope_file}" ] && cat ${inScope_file} | anew -q $dir/subdomains/subdomains.txt
-	cat $dir/subdomains/subdomains.txt | httpx ${HTTPX_FLAGS} -no-color -json -H "${HEADER}" -threads $HTTPX_THREADS -rl $HTTPX_RATELIMIT -retries 2 -timeout $HTTPX_TIMEOUT -o $dir/.tmp/web_full_info_probe.txt 2>>"$LOGFILE" &>/dev/null
-	cat $dir/.tmp/web_full_info_probe.txt 2>/dev/null | anew -q $dir/.tmp/webs_all.txt
-
-
     fi
 fi
 
