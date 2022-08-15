@@ -1825,7 +1825,7 @@ if [ -n "$inScope_file" ]; then
         printf "\n\n${bred} In Scope file is not a text file${reset}\n\n"
         exit
     else
-    	cd $dir
+    	start
     	[ -s "${inScope_file}" ] && cat ${inScope_file} | anew -q $dir/subdomains/subdomains.txt
 	cat $dir/subdomains/subdomains.txt | httpx ${HTTPX_FLAGS} -no-color -json -H "${HEADER}" -threads $HTTPX_THREADS -rl $HTTPX_RATELIMIT -retries 2 -timeout $HTTPX_TIMEOUT -o $dir/.tmp/web_full_info_probe.txt 2>>"$LOGFILE" &>/dev/null
 	cat $dir/.tmp/web_full_info_probe.txt 2>/dev/null | anew -q $dir/.tmp/webs_all.txt
