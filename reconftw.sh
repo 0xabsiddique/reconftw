@@ -1826,9 +1826,11 @@ if [ -n "$inScope_file" ]; then
         exit
     else
         SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-        dir="$SCRIPTPATH/Recon/$domain"
+        dir="${SCRIPTPATH}/Recon/"
 	cd $dir
-    	mkdir -p $domain .tmp .log .called_fn subdomains webs vulns fuzzing
+	mkdir -p $domain
+	cd $domain
+    	mkdir -p .tmp .log .called_fn subdomains webs vulns fuzzing
     	[ -s "${inScope_file}" ] && cat ${inScope_file} | anew -q subdomains/subdomains.txt
 	cat subdomains/subdomains.txt | httpx ${HTTPX_FLAGS} -no-color -json -H "${HEADER}" -threads $HTTPX_THREADS -rl $HTTPX_RATELIMIT -retries 2 -timeout $HTTPX_TIMEOUT -o .tmp/web_full_info_probe.txt 2>>"$LOGFILE" &>/dev/null
 	cat .tmp/web_full_info_probe.txt 2>/dev/null | anew -q .tmp/webs_all.txt
